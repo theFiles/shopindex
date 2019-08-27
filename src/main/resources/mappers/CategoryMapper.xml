@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaye.shopIndex.mapper.CategoryMapper">
+    <!-- 源格式 -->
+    <resultMap id="categoryMap" type="CategoryVo">
+        <id property="categoryId" column="category_id" />
+        <result property="categoryName" column="category_name" />
+    </resultMap>
+
+    <!-- 关联菜单 -->
+    <resultMap id="categoryMenuMap" type="CategoryVo" extends="categoryMap">
+        <collection property="subMenu1Vos" resultMap="com.lidaye.shopIndex.mapper.SubMenu1Mapper.subMenu1MapperMao" />
+    </resultMap>
+
+    <!-- 关联商品 -->
+    <resultMap id="categoryShopMap" type="CategoryVo" extends="categoryMap">
+        <collection property="shops" resultMap="com.lidaye.shopIndex.mapper.ShopMapper.shopInfoMap" />
+    </resultMap>
+
+    <select id="findCategoryAll" resultMap="categoryMenuMap">
+      SELECT *
+      FROM `category` AS c
+      LEFT JOIN `sub_menu1` as s1 USING (`category_id`)
+      LEFT JOIN `sub_menu2` as s2 USING (`sub_menu1_id`)
+    </select>
+
+    <select id="findShopGroupCate" resultMap="categoryShopMap">
+      SELECT *
+      FROM `category` AS c
+      LEFT JOIN `shop` AS s USING (`category_id`)
+      LEFT JOIN `shop_image` AS si USING (`shop_id`)
+    </select>
+</mapper>

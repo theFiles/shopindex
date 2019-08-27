@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaye.shopIndex.mapper.BannerMapper">
+
+    <resultMap id="bannerMap" type="BannerVo">
+        <id property="bannerId" column="banner_id" />
+        <result property="bannerTitle" column="banner_title" />
+        <result property="bannerImage" column="banner_Image" />
+        <result property="bannerDetailUrl" column="banner_detail_url" />
+        <result property="bannerOrder" column="banner_order" />
+        <result property="bannerCreateTime" column="banner_create_time" />
+    </resultMap>
+
+    <select id="findBannerAll" resultMap="bannerMap">
+      SELECT * FROM `banner` ORDER BY `banner_order`
+    </select>
+
+</mapper>

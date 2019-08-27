@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaye.shopIndex.mapper.ShopMapper">
+
+    <resultMap id="shopMap" type="ShopVo">
+        <id property="shopId" column="shop_id" />
+        <result property="shopName" column="shop_name" />
+        <result property="shopSubTitle" column="shop_sub_title" />
+        <result property="shopPromotePrice" column="shop_promote_price" />
+        <result property="shopOriginalPrice" column="shop_original_price" />
+        <result property="shopStock" column="shop_stock" />
+        <result property="categoryId" column="category_id" />
+        <result property="shopCreateDate" column="shop_create_date" />
+    </resultMap>
+
+    <resultMap id="shopInfoMap" type="ShopVo" extends="shopMap">
+        <collection property="shopImages" resultMap="com.lidaye.shopIndex.mapper.ShopImageMapper.shopImageMap" />
+    </resultMap>
+
+    <select id="findShopByCateId" resultMap="shopInfoMap">
+        SELECT *
+        FROM `shop` s LEFT JOIN `shop_image` si USING (`shop_id`)
+        WHERE s.`category_id` = #{cid}
+    </select>
+
+    <select id="findShopByShopName" resultMap="shopInfoMap" >
+        SELECT *
+        FROM `shop` s LEFT JOIN `shop_image` si USING (`shop_id`)
+        WHERE si.`shop_imagetype` = 'type_single'
+        <if test="type != null and type != ''">
+            AND s.`category_id` = #{type}
+        </if>
+        <if test="name != null and name != ''">
+            AND s.`shop_name` LIKE CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
+</mapper>

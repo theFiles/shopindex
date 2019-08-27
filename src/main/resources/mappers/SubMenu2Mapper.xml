@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaye.shopIndex.mapper.SubMenu2Mapper">
+    <resultMap id="subMenu2MapperMao" type="SubMenu2Vo">
+        <id property="subMenu2Id" column="sub_menu2_id" />
+        <result property="subMenu2Name" column="sub_menu2_name" />
+        <result property="subMenu1Id" column="sub_menu1_id" />
+    </resultMap>
+
+</mapper>
